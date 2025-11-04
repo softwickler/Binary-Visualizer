@@ -9,7 +9,7 @@ Here are some examples of different file types viewed using various Bytes Per Pi
 ![Viewing an .exe file (2-Bytes-per-pixel).](./img/s2.png) 
 ![Viewing a compressed image file (3-Bytes-per-pixel).](./img/s9.png) 
 
-*(For a complete gallery of screenshots and visualization patterns, please see the [Screenshots folder](./img/))*
+*(For a complete gallery of screenshots and visualization patterns, please see the [Screenshots](./SCREENSHOTS.md/))*
 
 ## ✨ Key Features
 
@@ -52,3 +52,4 @@ Contributions are welcome! This is a great project for those familiar with Delph
 ## 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
