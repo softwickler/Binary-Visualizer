@@ -26,8 +26,8 @@ type
     FSeekBegin, FSeekEnd: Int64;
     procedure WMDropFiles(var Msg: TWMDropFiles); message WM_DROPFILES;
     procedure SaveToFile;
+    procedure OptionsChanged(Sender: TObject);
   public
-    { Public declarations }
   end;
 
 var
@@ -38,7 +38,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Vcl.Imaging.jpeg, Vcl.Imaging.pngimage;
+  Vcl.Imaging.jpeg, Vcl.Imaging.pngimage, unFileContentViewer.Options;
 
 const
   DEFAULT_CHUNK_SIZE = 20 * 1024 * 1024;
@@ -105,6 +105,8 @@ end;
 
 procedure TfrmViewer.FormCreate(Sender: TObject);
 begin
+  frmOptions := TfrmOptions.Create(Self);
+  frmOptions.OnChange := OptionsChanged;
   DragAcceptFiles(Handle, True);
   FPixelFormatIndex := 3;
   FFileName := ParamStr(0);
@@ -116,6 +118,7 @@ end;
 procedure TfrmViewer.FormDestroy(Sender: TObject);
 begin
   DragAcceptFiles(Handle, False);
+  FreeAndNil(frmOptions);
 end;
 
 procedure TfrmViewer.WMDropFiles(var Msg: TWMDropFiles);
@@ -149,17 +152,22 @@ procedure TfrmViewer.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftSt
 var
   Size: Int64;
 begin
-  if Key = VK_F1 then Application.MessageBox(PChar(
-    'Enter Key:'       + sLineBreak + '  Toggle Smooth-Resize' + sLineBreak + sLineBreak +
-    '1..4 Keys:'       + sLineBreak + '  Set Bytes/Pixel' + sLineBreak + sLineBreak +
-    '+ / Up Key:'      + sLineBreak + '  Increase Bytes/Pixel' + sLineBreak + sLineBreak +
-    '- / Down Key:'    + sLineBreak + '  Decrease Bytes/Pixel' + sLineBreak + sLineBreak +
-    'Ctrl-Arrow Keys:' + sLineBreak + '  Change form size' + sLineBreak + sLineBreak +
-    'Right Key:'       + sLineBreak + '  Next page (toward EOF)' + sLineBreak + sLineBreak +
-    'Left Key:'        + sLineBreak + '  Previous page (toward BOF)' + sLineBreak + sLineBreak +
-    'Ctrl-S Key:'      + sLineBreak + '  Save current image' + sLineBreak + sLineBreak +
-    'Page Size:'       + sLineBreak + Format('  Maximum of %0.1f Mega-Bytes', [DEFAULT_CHUNK_SIZE / 1024 / 1024]) + StringOfChar(' ', 100)),
-    'By: Mahan Ahmadzadeh', MB_ICONINFORMATION)
+  if Key = VK_F1 then
+    Application.MessageBox(
+      PChar(
+        'F2 Key:'              + sLineBreak + '  Options' + sLineBreak + sLineBreak +
+        'Enter Key:'           + sLineBreak + '  Toggle Smooth-Resize' + sLineBreak + sLineBreak +
+        '1..4 Keys:'           + sLineBreak + '  Set Bytes/Pixel' + sLineBreak + sLineBreak +
+        '+/- or Up/Down Keys:' + sLineBreak + '  Increase / Decrease Bytes/Pixel' + sLineBreak + sLineBreak +
+        'Left/Right Keys:'     + sLineBreak + '  Move Between Pages' + sLineBreak + sLineBreak +
+        'Ctrl + Arrows:'       + sLineBreak + '  Resize Form (one pixel)' + sLineBreak + sLineBreak +
+        'Ctrl + S:'            + sLineBreak + '  Save Current Image' + sLineBreak + sLineBreak +
+        Format('Page Size:  %.1f MB', [DEFAULT_CHUNK_SIZE / 1024 / 1024]) + StringOfChar(' ', 100)
+      ),
+      'By: Mahan Softwickler',
+      MB_ICONINFORMATION
+    )
+  else if Key = VK_F2 then frmOptions.Show
   else if (Key = VK_RETURN) then FSmoothResize := not FSmoothResize
   else if (Key = VK_NUMPAD1) or (Key = $31) then FPixelFormatIndex := 1
   else if (Key = VK_NUMPAD2) or (Key = $32) then FPixelFormatIndex := 2
@@ -189,6 +197,24 @@ begin
       FSeekBegin := 0;
     end;
   end;
+  frmOptions.rgPixelFormat.ItemIndex := FPixelFormatIndex - 1;
+  frmOptions.chkSmoothResize.Checked := FSmoothResize;
+  FormResize(Sender);
+end;
+
+procedure TfrmViewer.OptionsChanged(Sender: TObject);
+var
+  Dif: Integer;
+begin
+  FPixelFormatIndex := frmOptions.rgPixelFormat.ItemIndex + 1;
+  FSmoothResize := frmOptions.chkSmoothResize.Checked;
+
+  Dif := Self.Width - imgViewer.Width;
+  Self.Width := frmOptions.edtWidth.Value + Dif;
+
+  Dif := Self.Height - imgViewer.Height;
+  Self.Height := frmOptions.edtHeight.Value + Dif;
+
   FormResize(Sender);
 end;
 
@@ -246,6 +272,12 @@ var
   aBytes: TBytes;
   pf: TPixelFormat;
 begin
+  if Sender = Self then
+  begin
+    frmOptions.edtWidth.Value := imgViewer.Width;
+    frmOptions.edtHeight.Value := imgViewer.Height;
+  end;
+
   imgViewer.Stretch := not FSmoothResize;
 
   S := TFileStream.Create(FFileName, fmOpenRead);
