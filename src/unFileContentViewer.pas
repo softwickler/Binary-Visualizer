@@ -40,9 +40,6 @@ implementation
 uses
   Vcl.Imaging.jpeg, Vcl.Imaging.pngimage, unFileContentViewer.Options;
 
-const
-  DEFAULT_CHUNK_SIZE = 20 * 1024 * 1024;
-
 function GenerateBitmap(aBytes: TBytes; const aRect: TRect; const aPixelFormat: TPixelFormat; aDefaultValue: Byte = 0): TBitmap;
 var
   BytesPerPixel: Integer;
@@ -108,11 +105,11 @@ begin
   frmOptions := TfrmOptions.Create(Self);
   frmOptions.OnChange := OptionsChanged;
   DragAcceptFiles(Handle, True);
-  FPixelFormatIndex := 3;
+  FPixelFormatIndex := frmOptions.rgPixelFormat.ItemIndex + 1;
+  FSmoothResize := frmOptions.chkSmoothResize.Checked;
   FFileName := ParamStr(0);
-  FSmoothResize := False;
   FSeekBegin := 0;
-  FSeekEnd := DEFAULT_CHUNK_SIZE;
+  FSeekEnd := frmOptions.ChunkSize;
 end;
 
 procedure TfrmViewer.FormDestroy(Sender: TObject);
@@ -137,7 +134,7 @@ begin
     if FileExists(sFile) then
     begin
       FSeekBegin := 0;
-      FSeekEnd := DEFAULT_CHUNK_SIZE;
+      FSeekEnd := frmOptions.ChunkSize;
       FSmoothResize := False;
       FFileName := sFile;
       FormResize(nil);
@@ -161,8 +158,7 @@ begin
         '+/- or Up/Down Keys:' + sLineBreak + '  Increase / Decrease Bytes/Pixel' + sLineBreak + sLineBreak +
         'Left/Right Keys:'     + sLineBreak + '  Move Between Pages' + sLineBreak + sLineBreak +
         'Ctrl + Arrows:'       + sLineBreak + '  Resize Form (one pixel)' + sLineBreak + sLineBreak +
-        'Ctrl + S:'            + sLineBreak + '  Save Current Image' + sLineBreak + sLineBreak +
-        Format('Page Size:  %.1f MB', [DEFAULT_CHUNK_SIZE / 1024 / 1024]) + StringOfChar(' ', 100)
+        'Ctrl + S:'            + sLineBreak + '  Save Current Image' + StringOfChar(' ', 100)
       ),
       'By: Mahan Softwickler',
       MB_ICONINFORMATION
@@ -206,6 +202,12 @@ procedure TfrmViewer.OptionsChanged(Sender: TObject);
 var
   Dif: Integer;
 begin
+  if Sender = frmOptions.rgChunkSize then
+  begin
+    FSeekBegin := 0;
+    FSeekEnd := frmOptions.ChunkSize;
+  end;
+
   FPixelFormatIndex := frmOptions.rgPixelFormat.ItemIndex + 1;
   FSmoothResize := frmOptions.chkSmoothResize.Checked;
 
@@ -214,6 +216,11 @@ begin
 
   Dif := Self.Height - imgViewer.Height;
   Self.Height := frmOptions.edtHeight.Value + Dif;
+
+  if not (Sender is TCustomEdit) then
+  begin
+    SetActiveWindow(Application.MainFormHandle);
+  end;
 
   FormResize(Sender);
 end;
