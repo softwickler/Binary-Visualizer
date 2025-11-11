@@ -46,8 +46,9 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_Description>Binary-File Visualizer</DCC_Description>
         <VerInfo_Locale>1031</VerInfo_Locale>
-        <DCC_UnitSearchPath>C:\git-Graphic32\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\Graphics32\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <SanitizedProjectName>BinaryVisualizer</SanitizedProjectName>
@@ -61,7 +62,7 @@
         <DCC_K>false</DCC_K>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <Icon_MainIcon>..\img\BinaryVisualizer.ico</Icon_MainIcon>
+        <Icon_MainIcon>BinaryVisualizer.ico</Icon_MainIcon>
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_UsePackage>DBXSqliteDriver;RESTComponents;SAPI;DBXInterBaseDriver;frxIntIO23;vclactnband;frxe23;vclFireDAC;advchartdedxe9;tethering;svnui;JvGlobus;FireDACADSDriver;fsTee23;JvPluginSystem;JvMM;TMSVCLUIPackPkgXlsDXE9;vcltouch;JvBands;vcldb;bindcompfmx;svn;Intraweb;vacommPkgDXE9;TMSVCLUIPackPkgDXE9;fqb230;inetdb;JvAppFrm;JvJans;JvNet;IFU_Standard;FmxTeeUI;JvDotNetCtrls;FireDACIBDriver;fmx;fmxdae;frxDBX23;IFU_Archiv;vclib;JvWizards;fsDB23;dbexpress;IndyCore;VACommpkgDEDXE9;vclx;Python_D;JvPageComps;dsnap;IFU_ExQReport;FireDACCommon;JvDB;RESTBackendComponents;S404_r;VCLRESTComponents;IFU_DYN_STANDARD;soapserver;frxTee23;JclDeveloperTools;vclie;bindengine;DBXMySQLDriver;CloudService;JvCmp;FireDACMySQLDriver;JvHMI;TMSVCLUIPackPkgExDXE9;htmlreports_xe10;FireDACCommonDriver;hclcore_xe10;IFU_Spezial_1;fsADO23;inet;bindcompdbx;IndyIPCommon;JvCustom;vcl;IndyIPServer;JvXPCtrls;IndySystem;htmleditfm_xe10;IFU_DB;dsnapcon;IFU_Form;madExcept_;IFU_Zusatz;FireDACMSAccDriver;fmxFireDAC;vclimg;madBasic_;TeeDB;FireDAC;IFU_Spezial_2;Jcl;JvCore;TMSVCLUIPackPkgWizDXE9;frxADO23;JvCrypt;FireDACSqliteDriver;FireDACPgDriver;ibmonitor;FireDACASADriver;htmlcompfm_xe10;fs23;FMXTee;IFU_DYN_DB;soaprtl;DbxCommonDriver;JvDlgs;JvRuntimeDesign;ibxpress;Tee;JvManagedThreads;htmlcomp_xe10;xmlrtl;soapmidas;ibxbindings;fmxobj;vclwinx;JvTimeFramework;rtl;madDisAsm_;DbxClientDriver;CustomIPTransport;vcldsnap;JvSystem;JvStdCtrls;bindcomp;appanalytics;IFU_Container;IndyIPClient;fsIBX23;bindcompvcl;frxDB23;advchartdxe9;TeeUI;vclribbon;dbxcds;VclSmp;frxIBX23;adortl;FireDACODBCDriver;JvDocking;JvPascalInterpreter;JclVcl;htmleditcore_xe10;htmledit_xe10;dsnapxml;dbrtl;inetdbxpress;IndyProtocols;frx23;JvControls;JvPrintPreview;JclContainers;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
@@ -95,6 +96,7 @@
         <DCC_DebugInformation>0</DCC_DebugInformation>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <Icon_MainIcon>BinaryVisualizer.ico</Icon_MainIcon>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <AppEnableHighDPI>true</AppEnableHighDPI>
