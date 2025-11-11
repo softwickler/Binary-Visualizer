@@ -1,0 +1,21 @@
+# --- Linguist language overrides ---
+*.pas linguist-language=Delphi
+*.dpr linguist-language=Delphi
+*.dfm linguist-language=Delphi
+*.inc linguist-detectable=false
+
+# --- File types ---
+*.exe binary
+*.dll binary
+*.bpl binary
+*.png binary
+*.jpg binary
+*.ico binary
+
+# --- Normalize line endings ---
+*.pas text eol=crlf
+*.dpr text eol=crlf
+*.dfm text eol=crlf
+
+# --- Docs ---
+docs/* linguist-documentation=true
