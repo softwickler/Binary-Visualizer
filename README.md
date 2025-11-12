@@ -1,3 +1,8 @@
+<p align="center">
+  <a href="https://github.com/softwickler/Binary-Visualizer">
+    <img alt="BinaryVisualizer" height="150" src="https://github.com/softwickler/Binary-Visualizer/blob/main/src/BinaryVisualizer.ico">
+  </a><br><h1 align="center">Binary-Visualizer</h1>
+</p>
 # 🔍 Binary-Visualizer: A Delphi Tool for Raw File Content Visualization
 
 A lightweight, high-performance tool developed in **Delphi** that visually renders the raw binary content of any file as an image. This unique visualization method helps developers, security researchers, and data analysts quickly identify data patterns, compression artifacts, and embedded file formats just by looking at the image.
@@ -52,4 +57,5 @@ Contributions are welcome! This is a great project for those familiar with Delph
 ## 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
 
